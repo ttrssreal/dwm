@@ -1,5 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
+#include <X11/XF86keysym.h>
+#include "dbus.h"
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -95,6 +98,9 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ 0,             				XF86XK_AudioRaiseVolume,	change_vol,     {.i = +5 } },
+	{ 0,             				XF86XK_AudioLowerVolume,	change_vol,     {.i = -5 } },
+	{ 0,             				XF86XK_AudioMute,	   		toggle_mute,    {0} },
 };
 
 /* button definitions */

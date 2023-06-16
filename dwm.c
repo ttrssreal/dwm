@@ -233,6 +233,8 @@ static int xerror(Display *dpy, XErrorEvent *ee);
 static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
+static void change_vol(const Arg *arg);
+static void toggle_mute();
 
 /* variables */
 static const char broken[] = "broken";
@@ -2140,6 +2142,27 @@ zoom(const Arg *arg)
 	pop(c);
 }
 
+void
+change_vol(const Arg *arg)
+{
+	int chg = arg->i;
+	char *cmd[] = {"amixer", "-D", "pipewire", "sset", "Master", NULL, NULL};
+	char sign = (chg & (1 << 31)) ? '-' : '+';
+	char delta[10];
+	sprintf(delta, "%d%%%c", abs(chg), sign);
+    cmd[5] = delta;
+    spawn(&(Arg){.v = cmd});
+	dbus_update_sb();
+}
+
+void
+toggle_mute()
+{
+	static const char *toggle_cmd[] = {"amixer", "-D", "pipewire", "set", "Master", "toggle", NULL};
+    spawn(&(Arg){.v = toggle_cmd});
+	dbus_update_sb();
+}
+
 int
 main(int argc, char *argv[])
 {
@@ -2153,6 +2176,7 @@ main(int argc, char *argv[])
 		die("dwm: cannot open display");
 	checkotherwm();
 	setup();
+	dbus_setup();
 #ifdef __OpenBSD__
 	if (pledge("stdio rpath proc exec", NULL) == -1)
 		die("pledge");
