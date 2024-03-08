@@ -22,7 +22,7 @@ FREETYPEINC = /usr/include/freetype2
 #MANPREFIX = ${PREFIX}/man
 
 # includes and libs
-INCS = -I${X11INC} -I${FREETYPEINC} -I/usr/include/dbus-1.0 -I/usr/lib/dbus-1.0/include/
+INCS = -I${X11INC} -I${FREETYPEINC} $(shell pkg-config --cflags dbus-1)
 LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS} -ldbus-1
 
 # flags
