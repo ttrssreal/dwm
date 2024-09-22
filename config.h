@@ -103,7 +103,7 @@ static const Key keys[] = {
 	{ 0,             				XF86XK_AudioRaiseVolume,   change_vol,     {.i = +5 } },
 	{ 0,             				XF86XK_AudioLowerVolume,   change_vol,     {.i = -5 } },
 	{ 0,             				XF86XK_AudioMute,	   	   toggle_mute,    {0} },
-	{ MODKEY,                       XK_l,      spawn,          {.v = bt_concmd }},
+	{ MODKEY,                       XK_o,      spawn,          {.v = bt_concmd }},
 	{ MODKEY,             			XK_s,	   spawn,    	   {.v = sscmd } },
 };
 
